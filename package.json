@@ -1,0 +1,28 @@
+{
+  "name": "li-ion",
+  "version": "0.1.0",
+  "description": "Lisp In One Night",
+  "main": "src/li-ion.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/all.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/senshu/Li-Ion.git"
+  },
+  "keywords": [
+    "Lisp"
+  ],
+  "author": "Guillaume Savaton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/senshu/Li-Ion/issues"
+  },
+  "homepage": "https://github.com/senshu/Li-Ion#readme",
+  "devDependencies": {
+    "mocha-esm": "^1.1.1"
+  }
+}
