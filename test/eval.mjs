@@ -48,4 +48,41 @@ describe("evaluation", () => {
         const expr = [quote, x];
         assert.equal(evaluate({[x]: 45}, expr), x);
     });
+    it("rejects let bindings with odd length", () => {
+        const x = Symbol.for("x");
+        const y = Symbol.for("y");
+        const let_ = Symbol.for("let");
+        const expr = [let_, [x, 10, y], y];
+        assert.throws(() => evaluate({}, expr));
+    });
+    it("executes let expressions", () => {
+        const x = Symbol.for("x");
+        const y = Symbol.for("y");
+        const let_ = Symbol.for("let");
+        const expr1 = [let_, [x, 10, y, 20], x];
+        const expr2 = [let_, [x, 10, y, 20], y];
+        assert.equal(evaluate({}, expr1), 10);
+        assert.equal(evaluate({}, expr2), 20);
+    });
+    it("executes lambda expression", () => {
+        const x = Symbol.for("x");
+        const y = Symbol.for("y");
+        const fn = Symbol.for("fn");
+        const expr1 = [[fn, [x, y], x], 10, 20];
+        const expr2 = [[fn, [x, y], y], 10, 20];
+        assert.equal(evaluate({}, expr1), 10);
+        assert.equal(evaluate({}, expr2), 20);
+    });
+    it("executes named function", () => {
+        const x = Symbol.for("x");
+        const y = Symbol.for("y");
+        const let_ = Symbol.for("let");
+        const fn = Symbol.for("fn");
+        const first = Symbol.for("first");
+        const second = Symbol.for("second");
+        const expr1 = [let_, [first,  [fn, [x, y], x]], [first,  10, 20]];
+        const expr2 = [let_, [second, [fn, [x, y], y]], [second, 10, 20]];
+        assert.equal(evaluate({}, expr1), 10);
+        assert.equal(evaluate({}, expr2), 20);
+    });
 });
