@@ -64,6 +64,22 @@ describe("evaluation", () => {
         assert.equal(evaluate({}, expr1), 10);
         assert.equal(evaluate({}, expr2), 20);
     });
+    it("executes if expressions", () => {
+        const x = Symbol.for("x");
+        const y = Symbol.for("y");
+        const if_ = Symbol.for("if");
+        const let_ = Symbol.for("let");
+        const gt = Symbol.for("gt");
+        const expr1 = [let_, [x, 10, y, 20], [if_, [gt, x, y], x, y]];
+        const expr2 = [let_, [x, 30, y, 20], [if_, [gt, x, y], x, y]];
+        const env = {
+            [gt]: function (env, a, b) {
+                return a > b;
+            }
+        };
+        assert.equal(evaluate(env, expr1), 20);
+        assert.equal(evaluate(env, expr2), 30);
+    });
     it("executes lambda expression", () => {
         const x = Symbol.for("x");
         const y = Symbol.for("y");
