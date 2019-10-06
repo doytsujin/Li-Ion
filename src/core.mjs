@@ -19,7 +19,7 @@ export const env = {
             throw `Variable bindings in let expression must be a list: ${toString(vars)}`;
         }
         if (vars.length % 2 !== 0) {
-            throw `The number of variable bindings in let expression must be even: ${toString(vars)}`;
+            throw `Invalid number of elements in list of variable bindings: ${toString(vars)}`;
         }
 
         let newEnv = env;
@@ -27,7 +27,7 @@ export const env = {
         for (let i = 0; i < vars.length; i += 2) {
             // Every even element in the list must be a variable name.
             if (typeof vars[i] !== "symbol") {
-                throw `Invalid variable name in let binding: ${toString(vars[i])}`;
+                throw `Invalid variable name: ${toString(vars[i])}`;
             }
             // Create a new environment that will contain the new variable.
             newEnv = Object.create(newEnv);
@@ -55,7 +55,7 @@ export const env = {
                 throw `Wrong number of arguments: ${toString(args)}`;
             }
             // Assign arguments to parameter names in a new environment.
-            // The evaluate the function body in the new environment.
+            // Then evaluate the function body in the new environment.
             const newEnv = Object.create(env);
             params.forEach((p, i) => {
                 newEnv[p] = args[i];
